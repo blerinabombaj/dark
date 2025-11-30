@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dark
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dark
+  template:
+    metadata:
+      labels:
+        app: dark
+    spec:
+      containers:
+      - name: dark
+        image: digdigdigdig/dark:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dark-service
+spec:
+  selector:
+    app: dark
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: LoadBalancer
